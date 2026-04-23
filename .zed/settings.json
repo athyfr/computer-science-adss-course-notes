@@ -1,0 +1,24 @@
+{
+  "project_name": "CS ADSS Course Submissions",
+  "terminal": {
+    "shell": {
+      "with_arguments": {
+        "program": "devenv",
+        "args": ["shell"],
+        "title_override": "CS ADSS Course Notes — Devenv"
+      }
+    }
+  },
+  "languages": {
+    "Markdown": {
+      "language_servers": ["rumdl", "harper-ls", "iwe"],
+      "preferred_line_length": 80,
+      "formatter": {
+        "external": {
+          "command": "rumdl",
+          "arguments": ["fmt", "--stdin"]
+        }
+      }
+    }
+  }
+}
