@@ -9,6 +9,9 @@
       }
     }
   },
+  "file_types": {
+    "Markdown": ["qmd"],
+  }, 
   "languages": {
     "Markdown": {
       "language_servers": ["rumdl", "harper-ls", "iwe"],
