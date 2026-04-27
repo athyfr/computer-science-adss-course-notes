@@ -1,0 +1,6 @@
+---
+title: "Python Concept Projects"
+---
+
+This Quarto project serves to demonstrate various computer science concepts in
+Python as a submission to a computer science course.
