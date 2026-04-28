@@ -12,7 +12,7 @@
   "languages": {
     "Markdown": {
       "language_servers": ["rumdl", "harper-ls", "iwe"],
-      "preferred_line_length": 80,
+      "preferred_line_length": 79,
       "formatter": {
         "external": {
           "command": "rumdl",
@@ -22,7 +22,7 @@
     },
     "Quarto": {
       "language_servers": ["rumdl", "harper-ls", "iwe"],
-      "preferred_line_length": 80,
+      "preferred_line_length": 79,
       "formatter": {
         "external": {
           "command": "rumdl",
