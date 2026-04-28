@@ -9,11 +9,18 @@
       }
     }
   },
-  "file_types": {
-    "Markdown": ["qmd"],
-  }, 
   "languages": {
     "Markdown": {
+      "language_servers": ["rumdl", "harper-ls", "iwe"],
+      "preferred_line_length": 80,
+      "formatter": {
+        "external": {
+          "command": "rumdl",
+          "arguments": ["fmt", "--stdin"]
+        }
+      }
+    },
+    "Quarto": {
       "language_servers": ["rumdl", "harper-ls", "iwe"],
       "preferred_line_length": 80,
       "formatter": {
