@@ -1,3 +1,6 @@
+.pytest_cache/
+.rumdl_cache/
+
 # Devenv
 .devenv*
 devenv.local.nix
