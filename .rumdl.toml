@@ -1,0 +1,45 @@
+[global]
+# List of file/directory patterns to exclude from linting
+exclude = [
+  ".git",
+  ".github",
+]
+disable = ["MD045", "MD077"]
+extend-enable = ["MD060", "MD063", "MD070", "MD072"]
+
+# Markdown flavour
+flavor = "quarto"
+
+# -- Rule-specific configurations --
+
+[MD003]
+style = "atx"  # Heading style (atx, atx_closed, setext)
+
+[MD004]
+style = "dash"  # Unordered list style (asterisk, plus, dash, consistent)
+
+[MD013]
+line-length = 79
+tables = false  # Tables don't *strictly* follow line-length limit.
+reflow = true
+#reflow-mode = "normalize"
+
+[MD054]
+# Only select link styles: <url> and [link-text][link-name] ... [link-name]: url
+autolink = true
+inline = false
+full = true
+collapsed = false
+shortcut = false
+url-inline = false
+
+[MD060]
+style = "aligned"
+max-width = 79
+loose-last-column = true
+
+[MD063]
+preserve-cased-words = false
+
+[MD072]
+key-order = ["title", "author"]
