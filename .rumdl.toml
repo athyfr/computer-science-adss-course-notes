@@ -5,7 +5,7 @@ exclude = [
   ".github",
 ]
 disable = ["MD045", "MD077"]
-extend-enable = ["MD060", "MD063", "MD070", "MD072"]
+extend-enable = ["MD060", "MD070", "MD072"]
 
 # Markdown flavour
 flavor = "quarto"
@@ -22,7 +22,7 @@ style = "dash"  # Unordered list style (asterisk, plus, dash, consistent)
 line-length = 79
 tables = false  # Tables don't *strictly* follow line-length limit.
 reflow = true
-#reflow-mode = "normalize"
+# reflow-mode = "normalize"
 
 [MD054]
 # Only select link styles: <url> and [link-text][link-name] ... [link-name]: url
@@ -37,9 +37,6 @@ url-inline = false
 style = "aligned"
 max-width = 79
 loose-last-column = true
-
-[MD063]
-preserve-cased-words = false
 
 [MD072]
 key-order = ["title", "author"]
