@@ -10,6 +10,8 @@
     pkgs.rumdl
   ];
 
+  languages.nix.enable = true;
+
   languages.python = {
     enable = true;
     package = pkgs.python314;
