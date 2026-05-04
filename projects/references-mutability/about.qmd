@@ -1,0 +1,141 @@
+---
+title: About Pass-by-Reference in Python
+author: Asten Valentinus
+---
+
+"pass-by-reference" isn't a relevant conceptualization for Python. Variables in
+Python follow a different paradigm than most programming languages.
+
+In Python, there are three key points to understand: references, mutability,
+and depending on the Python implementation used, caching.
+
+## References & Mutability
+
+In Python, a variable contains *nothing* but a reference to an object. This
+means that concepts like permissions, types, etc. don't apply to variables in
+Python. Instead, mutability and types are applied to the object itself.
+
+You can check if two variables reference the same object by using the `is`
+keyword:
+
+```{python}
+var_a = "This is an object."
+# This references the same object as `var_a`.
+var_b = var_a
+# This variable references a *different* object that happens to be identical to
+# the object referenced by the previous variables.
+var_c = "This is an object."
+
+print(f"var_a is var_b?: {var_a is var_b}")
+print(f"var_a is var_c?: {var_a is var_c}")
+print(f"var_b is var_c?: {var_b is var_c}")
+```
+
+As you can see, unlike what would be expected to happen coming from other
+languages, `var_b` was set as another *reference* to the same object that
+`var_a` references.
+
+If you've already written working Python code without yet understanding this,
+you may have seen that *modifying* `var_b` may not update `var_a` to match like
+in other languages---if they're references, why aren't they acting like it?
+
+The reason is that in Python, certain *core* types are immutable---such as
+`int`, `float`, `str`, etc.---and in Python, attempting to modify a truly
+immutable variable doesn't modify the underlying object, but instead makes a
+copy of that object with the updated data and changes the variable to reference
+*that* object instead.
+
+```{python}
+# Continues from previous Python code block.
+
+print(f"var_a is var_b?: {var_a is var_b}")
+
+var_b += " It has been 'modified'."
+
+print(f"var_a is var_b?: {var_a is var_b}")
+print(f"var_a: {var_a}")
+print(f"var_b: {var_b}")
+```
+
+Container types, such as `class`, `list`, `dict`, etc. are *mutable,* so they
+can be used similarly to references in other languages. You therefore need to
+be careful that they are *explicitly* copied or separately initialized when you
+want them to be separate.
+
+```{python}
+list_alphabet = ["a", "b", "c", "d", "e", "etc."]
+list_2 = list_alphabet
+
+# Print the before...
+print(f"list_alphabet is list_2?: {list_alphabet is list_2}")
+print(f"list_alphabet: {list_alphabet}")
+print(f"list_2: {list_2}")
+
+list_2.clear()
+list_2.extend(["This", "is", "not", "the", "alphabet"])
+print("Modified list_2...")
+
+# Print the after...
+print(f"list_alphabet is list_2?: {list_alphabet is list_2}")
+print(f"list_alphabet: {list_alphabet}")
+print(f"list_2: {list_2}")
+```
+
+Also keep in mind the `=` operator does not modify the object, but rather
+switches out the reference. Therefore, even with *mutable* types, this will
+break the reference:
+
+```{python}
+# Extends from previous example.
+
+list_2 = ["something", "else"]
+
+print(f"list_alphabet is list_2?: {list_alphabet is list_2}")
+print(f"list_alphabet: {list_alphabet}")
+print(f"list_2: {list_2}")
+```
+
+Since function arguments (inside the function) are considered as separate
+variables, these rules apply there, and so should be considered when thinking
+about pass-by-reference vs. pass-by-value.
+
+## Caching
+
+Depending on conditions that vary between Python implementations, newly
+initialized immutable objects may---instead of being created new---simply
+create references to an already existing immutable object.
+
+This saves memory and performance, but in some cases (if you're depending on
+`id()` and/or `is`) may create some unpredictability. Here's an example using
+the official Python implementation:
+
+```{python}
+integer_a = 10
+integer_b = 10
+print(f"integer_a is integer_b?: {integer_a is integer_b}")
+
+integer_a += 1
+print(f"integer_a is integer_b?: {integer_a is integer_b}")
+
+integer_b += 1
+print(f"integer_a is integer_b?: {integer_a is integer_b}")
+
+# With integers, in the official Python implementation, this doesn't occur if
+# the number is greater than 256:
+
+integer_a = 256
+integer_b = 256
+print(f"integer_a is integer_b?: {integer_a is integer_b}")
+
+integer_a = 257
+integer_b = 257
+print(f"integer_a is integer_b?: {integer_a is integer_b}")
+```
+
+## Secondary Sources
+
+Primary sources are linked as footnotes.
+
+- [Python variables, references and mutability by Bite Code!](https://www.bitecode.dev/p/python-variables-references-and-mutability)
+
+[^1]: <https://docs.python.org/3/reference/index.html> (?)

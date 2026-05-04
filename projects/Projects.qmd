@@ -4,3 +4,7 @@ title: "Python Concept Projects"
 
 This Quarto project serves to demonstrate various computer science concepts in
 Python as a submission to a computer science course.
+
+The parts of it are hyperlinked below:
+
+1. [Variable References & Mutability](./references-mutability/about.qmd)
