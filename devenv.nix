@@ -10,6 +10,16 @@
     pkgs.rumdl
   ];
 
+  languages.python = {
+    enable = true;
+    package = pkgs.python314;
+    lsp.enable = false; # Devenv's LSP setup system doesn't meet my requirements.
+    venv.enable = true;
+    venv.requirements = ''
+      jupyter==1.1.1
+    '';
+  };
+
   enterTest = ''
     echo "Running tests"
     git --version | grep --color=auto "${pkgs.git.version}"
