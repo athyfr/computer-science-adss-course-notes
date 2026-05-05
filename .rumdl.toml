@@ -22,7 +22,7 @@ style = "dash"  # Unordered list style (asterisk, plus, dash, consistent)
 line-length = 79
 tables = false  # Tables don't *strictly* follow line-length limit.
 reflow = true
-# reflow-mode = "normalize"
+reflow-mode = "normalize"
 
 [MD054]
 # Only select link styles: <url> and [link-text][link-name] ... [link-name]: url
