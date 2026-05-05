@@ -4,18 +4,15 @@
 
 1. Decided to make a calculator program, as that can integrate many algorithms.
 
-2. Went to the [recommended](https://docs.python.org/3/library/tkinter.html)
-   Tkinter [tutorial](https://tkdocs.com/tutorial/intro.html) to learn how to
-   make GUIs.
+2. Went to the [recommended][py-docs-tk] Tkinter [tutorial][tkdocs-intro] to
+   learn how to make GUIs.
 
 ## Feb 5th, 2026
 
 3. Decided to use GIMP to create sketches (plans) of GUI before implementation.
 
-4. Using [Zed editor](https://zed.dev/) instead of Thonny, as I'm more
-   familiar/comfortable using that. (I'm using
-   [ty](https://github.com/astral-sh/ty) and
-   [Ruff](https://github.com/astral-sh/ruff) LSPs)
+4. Using [Zed editor][zed] instead of Thonny, as I'm more familiar/comfortable
+   using that. (I'm using [ty][gh-ty] and [Ruff][gh-ruff] LSPs)
 
 5. Decided to pause the tutorial; the first example contains everything I need
    for this project.
@@ -25,7 +22,7 @@
 
 7. Searched online to find the Python equivalent of C/C++
    `function.bind(argument)`; it is `partial(function, argument)`,
-   `from functools import partial`. (see [GeeksforGeeks article](https://www.geeksforgeeks.org/python/how-to-bind-arguments-to-given-values-in-python-functions/))
+   `from functools import partial`. (see [GeeksforGeeks article][gfg-bind])
 
 8. Skimmed TkDocs, and found that journal entry 6 was wrong; a widget can span
    multiple grid cells using `columnspan` and `rowspan`. Regardless, the design
@@ -38,8 +35,8 @@
 
 ## Feb 9th or 10th?, 2026
 
-10. Tweaked ruff formatter/linter to be compliant to PEP 8
-    (line length 88 -> 79)
+10. Tweaked ruff formatter/linter to be compliant to PEP 8 (line length 88 ->
+    79)
 
 11. Decided to use Python's `eval()` to calculate expressions.
 
@@ -58,10 +55,11 @@
 
 ## Feb 17th, 2026
 
-15. Added exception handling based on [this](https://www.geeksforgeeks.org/python/define-custom-exceptions-in-python/)
+15. Added exception handling based on
+    [this][gfg-exception]
 
 16. Begun GitHub upload process; syncing credentials with GitHub (see
-    [this](https://stackoverflow.com/questions/64766508/git-change-users-credentials-in-past-commits-without-changing-the-history-date))
+    [this][so-git-change-cred-history])
 
     This is needed because offline username included my real name.
 
@@ -69,24 +67,27 @@
 
 ## Feb 18th, 2026
 
-18. Researched and found [tutorial by _Real Python_ about unit tests.](https://realpython.com/python-testing/))
+18. Researched and found
+    [tutorial by _Real Python_ about unit tests.][realpy-test]
 
 19. Teacher assigned to implement a program for solving linear systems.
-    [Textbook can be found here](https://github.com/APEXCalculus/Fundamentals-of-Matrix-Algebra-4th-Edition/blob/master/Fundamentals%20of%20Matrix%20Algebra%203rd%20Edition.pdf) (CC-BY-NC license)
+    [Textbook can be found here][textbook] (CC-BY-NC license)
 
 20. Thoroughly looked through (and copied) curricular competencies. (not
     present in this repo for licensing reasons)
 
 21. Organized code into separate files
 
-22. Enforced better security on eval call. (see [Real Python's article](https://realpython.com/python-eval-function/))
+22. Enforced better security on eval call. (see
+    [Real Python's article][realpy-eval])
 
 23. Begun work implementing JSON-based scope definition system. (will be
     committed when usable)
 
 ## Feb 19th, 2026
 
-24. Found out how to dynamically import modules from [this article](https://www.pythonmorsels.com/dynamically-importing-modules/)
+24. Found out how to dynamically import modules from
+    [this article][dyn-import-module]
 
 25. REFLECTION (for Feb 17th-18th)
 
@@ -98,10 +99,11 @@
 
 27. Begun writing `module_loader.py`.
 
-28. Looked into [reading files](https://www.geeksforgeeks.org/python/how-to-read-from-a-file-in-python/) in Python. (Needed for module loading)
+28. Looked into [reading files][gfg-read-file] in Python. (Needed for module
+    loading)
 
-29. Researched [tree traversal](https://www.geeksforgeeks.org/python/tree-traversal-techniques-in-python/) for Python; needed for module loading.
-    Decided pre-order traversal to be easiest in this case.
+29. Researched [tree traversal][gfg-tree-traversal] for Python; needed for
+    module loading. Decided pre-order traversal to be easiest in this case.
 
 30. Teacher assigned up to textbook section 1.2 to finish before the end of the
     day.
@@ -109,8 +111,8 @@
 31. Finished; working on 1.3.
 
 32. Decided to find an example in video form for learning Gaussian elimination;
-    the textbook isn't doing it for me. Decided to watch [this one](https://www.youtube.com/watch?v=2j5Ic2V7wq4)
-    next time; class is ending now.
+    the textbook isn't doing it for me. Decided to watch
+    [this one][yt-gaussian-elimination] next time; class is ending now.
 
 33. REFLECTION
 
@@ -134,10 +136,11 @@
 
 40. Finished textbook section 1.3, and moving on to 1.4.
 
-41. Confused a little about Reduced Row Echelon Form; looking at [GeeksforGeeks
-    article](https://www.geeksforgeeks.org/maths/reduced-row-echelon-form/) for guidance. Figured it out.
+41. Confused a little about Reduced Row Echelon Form; looking at
+    [GeeksforGeeks article][gfg-rref] for guidance. Figured it out.
 
-42. Started [`gaussian_elimination` sub-project.](subprojects/gaussian_elimination) Creating `Matrix` class.
+42. Started [`gaussian_elimination` sub-project.][my-gaussian-elimination]
+    Creating `Matrix` class.
 
 43. Decided on a documentation standard.
 
@@ -145,11 +148,12 @@
 
 ## Feb 26th, 2026
 
-44. Found that [LaTeX expressions are supported in reStructuredText;](https://docs.generic-mapping-tools.org/6.2/rst-cheatsheet.html) I can
-    put them in comments.
+44. Found that
+    [LaTeX expressions are supported in reStructuredText;][rst-cheatsheet] I
+    can put them in comments.
 
-45. Going through textbook section 1.4; learning about independent vs. dependent
-    variables. (Math concept, not programming concept)
+45. Going through textbook section 1.4; learning about independent vs.
+    dependent variables. (Math concept, not programming concept)
 
 ## Feb 27th, 2026
 
@@ -168,7 +172,7 @@
     README.
 
 51. Writing CLI manual testing interface for Matrix class. (Learning
-    [user input](https://www.w3schools.com/python/python_user_input.asp))
+    [user input][w3s-user-input])
 
 ## Mar 3rd, 2026
 
@@ -202,24 +206,28 @@
 
 31. Finishing refactoring Matrix class...
 
-32. Learned about [Python property() attribute constructor.](https://docs.python.org/3/library/functions.html#property) ([forum](https://stackoverflow.com/questions/2627002))
+32. Learned about [Python property() attribute constructor.][py-docs-property]
+    ([forum][so-property-constructor])
 
 33. Learned about @cached_property in Python.
 
-34. Found [suggested way to check whether @cached_property is currently cached.](https://discuss.python.org/t/76667/7)
+34. Found
+    [suggested way to check whether @cached_property is currently cached.][check-cached-property]
 
 35. Enabled _most_ linting rules in Ruff and all in ty, for stricter linting.
-    - This includes some that necessarily require significant changes to the code:
-        - FBT: Disallows booleans as function arguments, to prevent the [boolean
-          trap](https://adamj.eu/tech/2021/07/10/python-type-hints-how-to-avoid-the-boolean-trap/)
-        - COM812: Requires trailing commas when something is split across
-          multiple lines. (reduces git diff size)
-        - LOG015: Requires instantiated logger to be used from logger module.
+    - This includes some that necessarily require significant changes to the
+      code:
+      - `FBT`: Disallows booleans as function arguments, to prevent the
+        [boolean trap][boolean-trap]
+      - `COM812`: Requires trailing commas when something is split across
+        multiple lines. (reduces git diff size)
+      - `LOG015`: Requires instantiated logger to be used from logger module.
     - The newly enabled rules also provide lots of docstring linting.
 
 ## Mar 26th
 
-36. Git Stashed Matrix class refactoring for later; I'd better focus on the tests.
+36. Git Stashed Matrix class refactoring for later; I'd better focus on the
+    tests.
 
 37. Begun porting teacher's tests to work with my `Matrix` class.
 
@@ -227,7 +235,8 @@
 
 ## Mar 27th
 
-39. Finished integrating teacher's matrix test with old version of Matrix class.
+39. Finished integrating teacher's matrix test with old version of Matrix
+    class.
 
 ## Mar 28th
 
@@ -252,7 +261,8 @@
 
 ## Apr 2nd
 
-47. Learned about `itertools.chain.from_iterable` from [this SO answer.](https://stackoverflow.com/a/953097)
+47. Learned about `itertools.chain.from_iterable` from
+    [this SO answer.][so-itertools-from-iterable]
 
 48. Learned about dynamic type annotations for functions indirectly from the
     function signature of `zip`. Applied it to a function in `test_matrix.py`.
@@ -291,4 +301,31 @@
 _Backlog:_
 
 56. Finish Matrix class tests
-57. Slightly refactored [Gaussian Elimination `main.py` file.](https://github.com/athyfr/py-learning-gaussian-elimination/blob/d7addadf04baa8e337fa1244dd9d4e5eae9395ed/main.py)
+57. Slightly refactored
+    [Gaussian Elimination `main.py` file.][my-ge-main-py-c1]
+
+[boolean-trap]: https://adamj.eu/tech/2021/07/10/python-type-hints-how-to-avoid-the-boolean-trap/
+[check-cached-property]: https://discuss.python.org/t/76667/7
+[dyn-import-module]: https://www.pythonmorsels.com/dynamically-importing-modules/
+[gfg-bind]: https://www.geeksforgeeks.org/python/how-to-bind-arguments-to-given-values-in-python-functions/
+[gfg-exception]: https://www.geeksforgeeks.org/python/define-custom-exceptions-in-python/
+[gfg-read-file]: https://www.geeksforgeeks.org/python/how-to-read-from-a-file-in-python/
+[gfg-rref]: https://www.geeksforgeeks.org/maths/reduced-row-echelon-form/
+[gfg-tree-traversal]: https://www.geeksforgeeks.org/python/tree-traversal-techniques-in-python/
+[gh-ruff]: https://github.com/astral-sh/ruff
+[gh-ty]: https://github.com/astral-sh/ty
+[my-gaussian-elimination]: https://github.com/athyfr/py-learning-gaussian-elimination
+[my-ge-main-py-c1]: https://github.com/athyfr/py-learning-gaussian-elimination/blob/d7addadf04baa8e337fa1244dd9d4e5eae9395ed/main.py
+[py-docs-property]: https://docs.python.org/3/library/functions.html#property
+[py-docs-tk]: https://docs.python.org/3/library/tkinter.html
+[realpy-eval]: https://realpython.com/python-eval-function/
+[realpy-test]: https://realpython.com/python-testing/
+[rst-cheatsheet]: https://docs.generic-mapping-tools.org/6.2/rst-cheatsheet.html
+[so-git-change-cred-history]: https://stackoverflow.com/questions/64766508/git-change-users-credentials-in-past-commits-without-changing-the-history-date
+[so-itertools-from-iterable]: https://stackoverflow.com/a/953097
+[so-property-constructor]: https://stackoverflow.com/questions/2627002
+[textbook]: https://github.com/APEXCalculus/Fundamentals-of-Matrix-Algebra-4th-Edition/blob/master/Fundamentals%20of%20Matrix%20Algebra%203rd%20Edition.pdf
+[tkdocs-intro]: https://tkdocs.com/tutorial/intro.html
+[w3s-user-input]: https://www.w3schools.com/python/python_user_input.asp
+[yt-gaussian-elimination]: https://www.youtube.com/watch?v=2j5Ic2V7wq4
+[zed]: https://zed.dev/
