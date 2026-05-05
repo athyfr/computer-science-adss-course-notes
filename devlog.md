@@ -283,3 +283,12 @@
 ## Apr 17th
 
 54. Worked on tests. Got 2/8 created.
+
+## May 4th
+
+55. Remembered about the devlog.
+
+_Backlog:_
+
+56. Finish Matrix class tests
+57. Slightly refactored [Gaussian Elimination `main.py` file.](https://github.com/athyfr/py-learning-gaussian-elimination/blob/d7addadf04baa8e337fa1244dd9d4e5eae9395ed/main.py)
