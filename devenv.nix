@@ -19,6 +19,7 @@
     venv.enable = true;
     venv.requirements = ''
       jupyter==1.1.1
+      matplotlib==3.10.9
     '';
   };
 
