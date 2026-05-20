@@ -4,7 +4,6 @@
   packages = [
     pkgs.git
     pkgs.harper
-    pkgs.iwe
     pkgs.panache
     pkgs.quarto
     pkgs.rumdl
