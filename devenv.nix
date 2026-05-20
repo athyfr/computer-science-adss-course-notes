@@ -21,10 +21,7 @@
     package = pkgs.python314;
     lsp.enable = false; # Devenv's LSP setup system doesn't meet my requirements.
     venv.enable = true;
-    venv.requirements = ''
-      jupyter==1.1.1
-      graphviz==0.21
-    '';
+    venv.requirements = "pyproject.toml";
   };
 
   enterTest = ''
