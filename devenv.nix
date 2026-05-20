@@ -3,6 +3,9 @@
 {
   packages = [
     pkgs.git
+
+    pkgs.ruff  # Python formatter
+
     pkgs.harper
     pkgs.panache
     pkgs.quarto

@@ -1,0 +1,51 @@
+#:schema https://panache.bz/panache.schema.json
+
+flavor = "quarto"
+line-width = 60
+
+[flavor-overrides]
+"README.md" = "gfm"
+
+[format]
+wrap = "reflow"
+math-delimiter-style = "dollars"
+math-indent = 0
+tab-stops = "normalize"
+tab-width = 2
+
+[extensions]
+# Disable redundant ~~~ code block style.
+fenced-code-blocks = false
+
+# Disallow redundant table styles.
+simple-tables = false
+multiline-tables = false
+
+# Disallow HTML div style in favour of Pandoc divs.
+
+
+# Force consistent link style
+inline-links = false
+shortcut-reference-links = false
+
+# Force consistent footnote style
+inline-footnotes = false
+
+# Disable HTML features where Quarto/Pandoc has native syntax
+native-divs = false  # HTML <div>
+native-spans = false  # HTML <span>
+
+# Disable Pandoc title block in favour of YAML metadata block
+pandoc-title-block = false
+
+# Disable alternative formatting (low compatibility)
+raw-html = false
+raw-latex = false
+
+# Disable redundant uses of backslashes
+all-symbols-escapable = false
+escaped-line-breaks = false
+
+[formatters]
+# Format Python code blocks.
+python = "ruff"
