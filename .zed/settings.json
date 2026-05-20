@@ -14,8 +14,8 @@
       "preferred_line_length": 79,
       "formatter": {
         "external": {
-          "command": "rumdl",
-          "arguments": ["fmt", "--stdin"]
+          "command": "panache",
+          "arguments": ["format", "--stdin-filename", "{buffer_path}"]
         }
       }
     },
@@ -24,8 +24,8 @@
       "preferred_line_length": 79,
       "formatter": {
         "external": {
-          "command": "rumdl",
-          "arguments": ["fmt", "--stdin"]
+          "command": "panache",
+          "arguments": ["format", "--stdin-filename" "{buffer_path}"]
         }
       }
     }
