@@ -3,7 +3,7 @@
     "shell": {
       "with_arguments": {
         "program": "devenv",
-        "args": ["shell", "--offline"],
+        "args": ["shell"],
         "title_override": "CS ADSS Course Notes — Devenv"
       }
     }
