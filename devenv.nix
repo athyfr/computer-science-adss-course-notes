@@ -12,6 +12,10 @@
 
   languages.nix.enable = true;
 
+  enterShell = ''
+    export QUARTO_PYTHON="$DEVENV_ROOT/.devenv/state/venv/bin/python"
+  '';
+
   languages.python = {
     enable = true;
     package = pkgs.python314;
@@ -19,7 +23,7 @@
     venv.enable = true;
     venv.requirements = ''
       jupyter==1.1.1
-      matplotlib==3.10.9
+      graphviz==0.21
     '';
   };
 
