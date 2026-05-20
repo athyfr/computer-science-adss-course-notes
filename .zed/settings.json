@@ -25,7 +25,7 @@
       "formatter": {
         "external": {
           "command": "panache",
-          "arguments": ["format", "--stdin-filename" "{buffer_path}"]
+          "arguments": ["format", "--stdin-filename", "{buffer_path}"]
         }
       }
     }
