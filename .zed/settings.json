@@ -20,7 +20,7 @@
       }
     },
     "Quarto": {
-      "language_servers": ["rumdl", "harper-ls", "iwe"],
+      "language_servers": ["rumdl", "harper-ls"],
       "preferred_line_length": 79,
       "formatter": {
         "external": {
