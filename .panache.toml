@@ -1,7 +1,7 @@
 #:schema https://panache.bz/panache.schema.json
 
 flavor = "quarto"
-line-width = 60
+line-width = 79
 
 [flavor-overrides]
 "README.md" = "gfm"
