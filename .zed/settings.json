@@ -12,6 +12,7 @@
     "Markdown": {
       "language_servers": ["rumdl", "harper-ls"],
       "preferred_line_length": 79,
+      "wrap_guides": [72, 79],  // 72 is comment line-length
       "formatter": {
         "external": {
           "command": "panache",
@@ -22,6 +23,7 @@
     "Quarto": {
       "language_servers": ["rumdl", "harper-ls"],
       "preferred_line_length": 79,
+      "wrap_guides": [72, 79],
       "formatter": {
         "external": {
           "command": "panache",
