@@ -1,0 +1,66 @@
+---
+title: Disecting a Memory State Diagram
+author: Asten Valentinus
+---
+
+I have been asked by my teacher to explain (prove my comprehension) of this
+memory state diagram:
+
+![Python Understanding Variables](./python-understanding-variables)
+
+I'll explain it through commented Python code.
+
+```python
+# Do note that there are differences between how this would execute in a
+# Python interpreter, and what is represented by the diagram.
+#
+# The comments describe the diagram rather than the code.
+
+# This is likely programmed in C++, rather than Python which has a more
+#   niche memory setup.
+#
+# Consistencies:
+# - Strings are not literals, instead they are stored as pointers and
+#   kept elsewhere in memory.
+# - Integers and booleans are literals; they are stored inside their
+#   parent objects.
+# - Lists are pointed to, rather than stored inside their parent classes.
+#   If this is C++, `Vector`s are likely used instead of literal lists.
+#
+# User 0 and user 3 both have the song "Theme song" in their playlists;
+#   the arrays share the same object to represent that.
+
+
+class Song:
+    def __init__(self, title: str, duration: int, favourite: bool) -> None:
+        self.title = title
+        self.duration = duration
+        self.favourite = favourite
+
+
+class Account:
+    def __init__(
+        self, login: str, password: str, playlist: list[Song]
+    ) -> None:
+        self.login = login
+        self.password = password
+        self.playlist = playlist
+
+
+class Users:
+    def __init__(self, accounts: list[Account]) -> None:
+        self.accounts = account
+
+
+if __name__ == "__main__":
+    theme_song = Song("Theme Song", 137, True)
+
+    users = Users(
+        [
+            Account("Ahmed231", "scruffy", [None, theme_song, None, None]),
+            None,
+            None,
+            Account(None, None, [None, None, None, theme_song]),
+        ]
+    )
+```
