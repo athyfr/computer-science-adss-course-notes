@@ -21,11 +21,7 @@ fenced-code-blocks = false
 simple-tables = false
 multiline-tables = false
 
-# Disallow HTML div style in favour of Pandoc divs.
-
-
-# Force consistent link style
-inline-links = false
+# Disallow niche link style.
 shortcut-reference-links = false
 
 # Force consistent footnote style
