@@ -1,0 +1,219 @@
+---
+title: Data Structures
+author: Asten Valentinus
+---
+
+Data-structures are the way we store the data in our programs. Here, I'll list
+6 different data-structures, and how they can be practically used.
+
+## Data-Structures
+
+### Lists
+
+A list is a finite collection of ordered elements that can grow or shrink,
+according to Wikipedia[^wiki-lists]. Lists should not be confused for Arrays
+(cannot grow or shrink) or Sets (not ordered), though lists can be used to
+represent either.
+
+Lists should be used wherever a variable-length, ordered collection of items
+are needed. For example, as seen on the [example memory state diagram][my-msd],
+a list might be used in a music service to store the songs in a playlist.
+
+To show a related example, here's how a desktop music player program might work
+in Python code:
+
+```python
+from pathlib import Path
+
+from audio_player import Audio
+
+class Song:
+    def __init__(self, file: Path | None, name: str, artist: str)
+        self.audio: Audio = Audio.load(file)
+        self.name = name
+
+    @staticmethod
+    def Placeholder() -> Song:
+        return Song(None, "No song playing.", "No artist.")
+
+    async def play(self, core: MusicPlayerCore) -> None:
+        core.active_song = self
+        await self.audio.play_async()
+
+class Playlist:
+    def __init__(self, songs: list[Song], name: str) -> None:
+        self.name = name
+        self.songs = songs
+
+    def play(self) -> None:
+        for song in self.songs:
+            await song.play()
+
+
+# This class represents an instance of the underlying engine. The GUI
+# would be implemented elsewhere, with this as an import.
+class MusicPlayerCore:
+    def __init__(self, playlists: list[Playlist]) -> None:
+        self.playlists = playlists
+        self.active_song = Song.Placeholder()
+```
+
+### Queues & Stacks
+
+Queues are similar to lists (a finite collection of ordered elements that can
+grow or shrink), but with an additional restriction: you can only add
+(*enqueue*) elements to the back, and you can only read/remove (*dequeue*)
+elements from the back. A *peek* or *front* operation (which allows reading the
+element on the back) is also sometimes allowed[^wiki-queue], depending on the
+language. This enforces a FIFO (first-in-first-out) order---i.e. elements are
+dequeued in the same order they were queued.
+
+One use of a queue is scheduling processes; going back to the example of a
+music player, you might use a queue to schedule what songs should play:
+
+- When you want add another song to the queue, that ensures it will play after
+  all other in the queue have played.
+- When a song starts playing, it is dequeued and loaded into the audio player.
+- When a song finishes playing, the next song starts playing.
+
+Here's a modified version of the above python code to use Python's
+`queue.SimpleQueue` class:
+
+```python
+# ...
+
+from queue import SimpleQueue
+
+# ...
+
+
+class Playlist:
+    # The songs are initialized as a Queue.
+    def __init__(self, songs: SimpleQueue[Song], name: str) -> None:
+        self.name = name
+        self.songs = songs
+
+    def play(self) -> None:
+        # Python's SimpleQueue doesn't have a reliable way to check the
+        # size, so we must use a for loop.
+        while not self.songs.empty():
+            # SimpleQueue.get_nowait() gets and dequeues an element, without
+            # the possibility of waiting for a new element to appear if it's
+            # empty.
+            song = self.songs.get_nowait()
+            await song.play()
+
+
+# ...
+```
+
+A stack is similar to a queue, that elements are added (*pushed*) and removed
+(*popped*) **from the same side.** This means that elements are popped reverse
+to the order they were pushed. One use-case for this would be an undo system,
+where the last action taken is the first to be undone.
+
+### Associative Arrays (Dictionaries & Maps)
+
+A dictionary, map, or associative array[^wiki-asso-arr] is another type of
+collection, but instead of being ordered (though they may be, depending on
+implementation), they are instead addressable by arbitrary values (usually
+strings).
+
+An example of a well-known language that uses dictionaries is JSON. Here's an
+example:
+
+```json
+{
+  "First one": 1,
+  "Second one": 2,
+  "A dictionary with floating-point keys": {
+    0.2: "one-fifth",
+    0.25: "one-quarter",
+    0.333: "one-third",
+    0.5: "one-half",
+    1.0: "one"
+  }
+}
+```
+
+Be careful! Dictionaries should only be used if the keys are *not*
+predetermined. If they are, use C/C++ `struct` or Python `class` instead. With
+this rule in mind, use of dictionaries become very niche.
+
+In many cases, it may be useful to use a *bidirectional* map instead---this
+offers the capability to perform lookups in both directions.
+
+I'll offer an example (using the [bidict][rtd-bidict] PyPi package):
+
+```{python}
+from bidict import bidict
+
+# Create a bidirectional dictionary
+example_bidict = bidict(
+    {
+        0.2: "one-fifth",
+        0.25: "one-quarter",
+        0.333: "one-third",
+        0.5: "one-half",
+        1.0: "one"
+    }
+)
+
+# Get the string associated with the float `0.2`
+print(example_bidict[0.2])
+
+# Get the float associated with the string `"one-third"`
+print(example_bidict.inverse()["one-third"])
+```
+
+This capability to get associated values either way can come quite handy in
+more advanced cases.
+
+### Trees
+
+A tree[^wiki-tree] is a special data-structure in which each element (called a
+'node') can has a parent (unless it is a root node) and any number of children.
+
+I'll use the `bigtree` PyPi package to an example:
+
+```{python}
+from bigtree import Node, Tree
+
+# In `bigtree`, nodes have names in addition to attributes.
+node_a = Node(
+    # name
+    "a",
+    # *kwargs
+    attrib_1 = "This is an attribute",
+    attrib_2 = 3.141
+)
+
+node_b = Node("b", parent = node_a, foo = "bar")
+
+node_c = Node("c")
+
+node_root = Node("Root node", children = [node_a, node_c])
+
+tree = Tree(node_root)
+
+print(tree.show(attr_list=["attrib_1", "attrib_2", "foo"]))
+# For visualizing trees, there's also:
+# `Tree.hshow()`, `Tree.vshow()`, `Tree.to_dot()` (Graphviz),
+# and `Tree.write_png()`
+```
+
+[^wiki-lists]: https://en.wikipedia.org/wiki/List\_(abstract_data_type)
+
+[^wiki-array]: https://en.wikipedia.org/wiki/Array\_(data_structure)
+
+[^wiki-queue]: https://en.wikipedia.org/wiki/Queue\_(abstract_data_type)
+
+[^wiki-stack]: https://en.wikipedia.org/wiki/Stack\_(abstract_data_type)
+
+[^wiki-asso-arr]: https://en.wikipedia.org/wiki/Associative_array
+
+[^wiki-tree]: https://en.wikipedia.org/wiki/Tree\_(abstract_data_type)
+
+[my-msd]: ../memory-state-diagram/about.qmd
+
+[rtd-bidict]: https://bidict.readthedocs.io/en/main/
