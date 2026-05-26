@@ -23,7 +23,7 @@
     package = pkgs.python314;
     lsp.enable = false; # Devenv's LSP setup system doesn't meet my requirements.
     venv.enable = true;
-    venv.requirements = "pyproject.toml";
+    venv.requirements = ./pyproject.toml;
   };
 
   enterTest = ''
