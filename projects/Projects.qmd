@@ -10,3 +10,4 @@ The parts of it are hyperlinked below:
 1. [Variable References & Mutability](./references-mutability/about.qmd)
 2. [Memory State Diagram (analysis)](./memory-state-diagram/about.qmd)
 3. [Data Structures](./data-structures/about.qmd)
+4. [Sorting & Searching](./sorting-searching/about.qmd)
