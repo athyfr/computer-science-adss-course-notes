@@ -1,22 +1,3 @@
----
-title: Sorting & Searching
-author: Asten Valentinus
----
-
-Sorting and searching are *both* valuable types of algorithm for a programmer
-to have under her belt.
-
-If you are---for example---implementing your own custom `Dictionary` class,
-you'd need a searching algorithm to scan through keys. Getting an element from
-a dictionary isn't free like it is for a pointer-array-style list.
-
-The finished code is available [here,](./unordered-dictionary.py) if you want
-to skip ahead.
-
-Here's the first iteration of the class, without any of the fancy sorting &
-searching algorithms:
-
-```python
 """An implementation of an unordered dictionary."""
 
 from typing import Any
@@ -68,7 +49,6 @@ class UnorderedDictionary[ElementType = Any]:
         """Get an element of the dictionary using a linear search algorithm.
 
         This is the simplest (and most inefficient) searching algorithm.
-        It simply loops over the keys until it finds the one we're looking for.
 
         Args:
             key: The key associated with the value to get.
@@ -88,16 +68,3 @@ class UnorderedDictionary[ElementType = Any]:
             return None
 
         return self.values[found_index]
-```
-
-## Binary Search
-
-## Sorting
-
-### Bubble Sort
-
-### Insertion Sort
-
-### Quick-Merge Sort
-
-## Data-Structure Traversal
