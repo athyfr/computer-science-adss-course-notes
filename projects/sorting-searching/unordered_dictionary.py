@@ -68,3 +68,37 @@ class UnorderedDictionary[ElementType = Any]:
             return None
 
         return self.values[found_index]
+
+    def get_by_binary_search(self, key: str) -> ElementType | None:
+        """Get an element of the dictionary using the Binary Search algorithm.
+
+        The dictionary is expected to be sorted lexicographically before
+
+        Args:
+            key: The key associated with the value to get.
+
+        Returns:
+            The value associated with the key, or `None` if the key is
+            not defined.
+        """
+        # Signifies the range that may contain the key we want.
+        search_range: tuple[int, int] = (0, len(self.keys) - 1)
+
+        while True:
+            checked_key_index: int = int(
+                (search_range[0] + search_range[1]) / 2
+            )
+            checked_key: str = self.keys[checked_key_index]
+
+            if checked_key < key:
+                search_range = (checked_key_index + 1, search_range[1])
+
+            elif checked_key > key:
+                search_range = (search_range[0], checked_key_index - 1)
+
+            elif checked_key == key:
+                return self.values[checked_key_index]
+
+            # This always eventually is true when the key is undefined.
+            if search_range[0] > search_range[1]:
+                return None
