@@ -90,6 +90,14 @@ class UnorderedDictionary[ElementType = Any]:
         return self.values[found_index]
 ```
 
+The linear search---though simple to implement---can be quite inefficient for
+larger data-structures. The Big-O notation is $O(n)$, meaning that in the
+worst-case scenario, this takes an amount of time proportional to the size of
+the dictionary.
+
+Better is possible. In the next section, I'll show the *Binary Search*
+algorithm.
+
 ## Binary Search
 
 ## Sorting
