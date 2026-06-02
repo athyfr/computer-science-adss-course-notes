@@ -59,7 +59,9 @@ class UnorderedDictionary[ElementType = Any]:
 
     # ---- Getter Implementations ----
 
-    def get_by_linear_search(self, key: str) -> ElementType | None:
+    type _GetterReturnType = tuple[ElementType, int] | None
+
+    def get_by_linear_search(self, key: str) -> _GetterReturnType:
         """Get an element of the dictionary using a linear search algorithm.
 
         This is the simplest (and most inefficient) searching algorithm.
@@ -81,9 +83,9 @@ class UnorderedDictionary[ElementType = Any]:
         if found_index == -1:
             return None
 
-        return self.values[found_index]
+        return self.values[found_index], found_index
 
-    def get_by_binary_search(self, key: str) -> ElementType | None:
+    def get_by_binary_search(self, key: str) -> _GetterReturnType:
         """Get an element of the dictionary using the Binary Search algorithm.
 
         The dictionary is expected to be sorted lexicographically before
@@ -111,7 +113,7 @@ class UnorderedDictionary[ElementType = Any]:
                 search_range = (search_range[0], checked_key_index - 1)
 
             elif checked_key == key:
-                return self.values[checked_key_index]
+                return self.values[checked_key_index], checked_key_index
 
             # This always eventually is true when the key is undefined.
             if search_range[0] > search_range[1]:

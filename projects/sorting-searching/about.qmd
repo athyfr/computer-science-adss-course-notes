@@ -114,8 +114,8 @@ Here's how it might go:
 3. If it's above, start again with the 3/4 through the dict, if it's below,
    1/4.
 
-It's like playing a number guessing game! With this algorithm, it narrows
-down the possibility by huge amounts at a time.
+It's like playing a number guessing game! With this algorithm, it narrows down
+the possibility by huge amounts at a time.
 
 It can be implemented like this:
 
@@ -138,9 +138,7 @@ def get_by_binary_search(self, key: str) -> ElementType | None:
     search_range: tuple[int, int] = (0, len(self.keys) - 1)
 
     while True:
-        checked_key_index: int = int(
-            (search_range[0] + search_range[1]) / 2
-        )
+        checked_key_index: int = int((search_range[0] + search_range[1]) / 2)
         checked_key: str = self.keys[checked_key_index]
 
         if checked_key < key:
