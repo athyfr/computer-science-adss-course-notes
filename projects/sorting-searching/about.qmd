@@ -159,6 +159,16 @@ def get_by_binary_search(self, key: str) -> ElementType | None:
 
 ## Sorting
 
+As mentioned above, the dictionary will not work correctly if it isn't sorted.
+
+How do we ensure it's properly sorted? There are several algorithms at our
+disposal.
+
+Many high-level programming languages/libraries implement these for us,
+including Python. For those that don't however, and for cases where existing
+interfaces aren't applicable, it is important to have these in our mental
+toolbox.
+
 ### Bubble Sort
 
 ### Insertion Sort
