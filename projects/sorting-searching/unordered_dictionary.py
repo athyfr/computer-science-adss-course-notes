@@ -17,6 +17,8 @@ class UnorderedDictionary[ElementType = Any]:
     Created to demonstrate various sorting and searching algorithms.
     """
 
+    # ---- Initializers ----
+
     def __init__(self, keys: list[str], values: list[ElementType]) -> None:
         """Initialize using raw `keys` and `values` lists.
 
@@ -52,6 +54,10 @@ class UnorderedDictionary[ElementType = Any]:
             list(base_dict.keys()),
             list(base_dict.values()),
         )
+
+    # ---- Sort Implementations ----
+
+    # ---- Getter Implementations ----
 
     def get_by_linear_search(self, key: str) -> ElementType | None:
         """Get an element of the dictionary using a linear search algorithm.
@@ -110,3 +116,5 @@ class UnorderedDictionary[ElementType = Any]:
             # This always eventually is true when the key is undefined.
             if search_range[0] > search_range[1]:
                 return None
+
+    # ---- Dunder Methods ----
