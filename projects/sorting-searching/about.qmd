@@ -111,8 +111,7 @@ Here's how it might go:
 1. Pick the key *right* in the middle of the sorted dictionary.
 2. Check whether that key is above or if it's below the key we're looking for.
    This is possible because the keys are sorted (i.e. lexicographically)
-3. If it's above, start again with the 3/4 through the dict, if it's below,
-   1/4.
+3. If it's above, start again at 3/4 through the dict, if it's below, 1/4.
 
 It's like playing a number guessing game! With this algorithm, it narrows down
 the possibility by huge amounts at a time.
@@ -120,7 +119,7 @@ the possibility by huge amounts at a time.
 It can be implemented like this:
 
 ```python
-def get_by_binary_search(self, key: str) -> ElementType | None:
+def get_by_binary_search(self, key: str) -> _GetterReturnType:
     """Get an element of the dictionary using the Binary Search algorithm.
 
     The dictionary is expected to be sorted lexicographically before
@@ -138,7 +137,7 @@ def get_by_binary_search(self, key: str) -> ElementType | None:
     search_range: tuple[int, int] = (0, len(self.keys) - 1)
 
     while True:
-        checked_key_index: int = int((search_range[0] + search_range[1]) / 2)
+        checked_key_index = int((search_range[0] + search_range[1]) / 2)
         checked_key: str = self.keys[checked_key_index]
 
         if checked_key < key:
@@ -148,11 +147,11 @@ def get_by_binary_search(self, key: str) -> ElementType | None:
             search_range = (search_range[0], checked_key_index - 1)
 
         elif checked_key == key:
-            return self.values[checked_key_index]
+            return self.values[checked_key_index], checked_key_index
 
         # This always eventually is true when the key is undefined.
         if search_range[0] > search_range[1]:
-            return None
+            raise KeyError
 ```
 
 ## Sorting
@@ -167,7 +166,104 @@ including Python. For those that don't however, and for cases where existing
 interfaces aren't applicable, it is important to have these in our mental
 toolbox.
 
+Here I'll show the implementations of a few different sorting algorithms and
+their Big-O analyses.
+
 ### Bubble Sort
+
+Bubble sort (or 'sinking sort') is likely the easiest sorting algorithm to
+understand and implement, but is quite inefficient. While learning sorting
+algorithms, it can be the best introductory option.
+
+Here's how it works:
+
+```python
+def sort_by_bubble(self) -> None:
+    """Sort the dictionary using the Bubble Sort algorithm.
+
+    Based on <https://www.geeksforgeeks.org/dsa/bubble-sort-algorithm/>.
+    """
+    # Loop over each element, ensuring each one is in the
+    # correct place.
+    for i in range(self._len):
+        swapped = False
+
+        # Loop over each element *after* element `i`, as `i` and before
+        # are already in place.
+        for j in range(self._len - i - 1):
+            # If the key isn't in order with its successor, swap them.
+            # The greater-than operator works on strings, going by
+            # lexicographical order.
+            if self.keys[j] > self.keys[j + 1]:
+                # Swap the key with its successor.
+                self.keys[j], self.keys[j + 1] = (
+                    self.keys[j + 1],
+                    self.keys[j],
+                )
+                # Swap the value with its successor, to bring them into
+                # order relative to eachother.
+                self.values[j], self.values[j + 1] = (
+                    self.values[j + 1],
+                    self.values[j],
+                )
+                # Track that this operation happened (see below).
+                swapped = True
+
+        # If the inner loop didn't cause any sorting, this means no
+        # more sorting is necessary.
+        if not swapped:
+            break
+
+    self._sorted = True  # Used to track whether sorting is needed when
+    #                      performing operations that require it to be.
+    #
+    #                      It was added to __init__, defaulting to `False`.
+```
+
+With that sorting algorithm, we can now ensure the dictionary is sorted before
+binary searching.
+
+I've removed the note from the docstring about sorting, and added the following
+snippet to the start of `get_by_binary_search`:
+
+```python
+if not self._sorted:
+    self.sort()  # A wrapper function, pointing to a default sort algorithm.
+```
+
+`sort` is a defaulted sort algorithm, currently bound to `bubble_sort`. I'll
+update it as more optimized algorithms are implemented.
+
+Given all that, we can now run a `binary_search` without having to manually
+sort it!:
+
+```{python}
+from unordered_dictionary import UnorderedDictionary
+
+example_dictionary = UnorderedDictionary.from_dict(
+    {
+        "C": 4,
+        "D": 9,
+        "B": 2,
+        "A": 1,
+    }
+)
+
+example_dictionary.sort_by_bubble()
+
+print(f"A: {example_dictionary.get_by_binary_search('A')[0]}")
+print(f"C: {example_dictionary.get_by_binary_search('C')[0]}")
+```
+
+As we can see, everything is functioning as expected; A is 1, and C is 4.
+
+This may have a little more of a performance impact on the first run (when it
+sorts the dictionary,) but on subsequent runs it will be faster than a linear
+search.
+
+In addition, we can use a more optimized sorting algorithm. I'll cover 2 of
+those below; the *insertion sort* algorithm, and the *quick-merge sort*
+algorithm.
 
 ### Insertion Sort
 

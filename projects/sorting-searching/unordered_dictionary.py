@@ -8,7 +8,7 @@ Classes:
         this module.
 """
 
-from typing import Any, Callable
+from typing import Any
 
 
 class UnorderedDictionary[ElementType = Any]:
@@ -37,6 +37,7 @@ class UnorderedDictionary[ElementType = Any]:
         self.keys = keys
         self.values = values
         self._len = len(keys)
+        self._sorted = False
 
     @staticmethod
     def from_dict(
@@ -58,9 +59,45 @@ class UnorderedDictionary[ElementType = Any]:
 
     # ---- Sort Implementations ----
 
+    def sort_by_bubble(self) -> None:
+        """Sort the dictionary using the Bubble Sort algorithm.
+
+        Based on <https://www.geeksforgeeks.org/dsa/bubble-sort-algorithm/>.
+        """
+        # Loop over each element, ensuring each one is in the
+        # correct place.
+        for i in range(self._len):
+            swapped = False
+
+            # Loop over each element *after* element `i`, as `i` and before
+            # are already in place.
+            for j in range(self._len - i - 1):
+                if self.keys[j] > self.keys[j + 1]:
+                    # Swap the key with its successor.
+                    self.keys[j], self.keys[j + 1] = (
+                        self.keys[j + 1],
+                        self.keys[j],
+                    )
+                    # Swap the value with its successor, to bring them into
+                    # order relative to each other.
+                    self.values[j], self.values[j + 1] = (
+                        self.values[j + 1],
+                        self.values[j],
+                    )
+                    # Track that this operation happened (see below).
+                    swapped = True
+
+            # If the inner loop didn't cause any sorting, this means no
+            # more sorting is necessary.
+            if not swapped:
+                break
+
+        self._sorted = True
+
     # Default sort implementation
     def sort(self) -> None:
         """Sort the dictionary using an arbitrary algorithm."""
+        self.sort_by_bubble()
 
     # ---- Getter Implementations ----
 
@@ -75,8 +112,8 @@ class UnorderedDictionary[ElementType = Any]:
             key: The key associated with the value to get.
 
         Returns:
-            The value associated with the key, or `None` if the key is
-            not defined.
+            A tuple of the value associated with the key, and its index, for
+            internal/advanced purposes.
 
         Raises:
             KeyError: If the key does not exist.
@@ -96,25 +133,24 @@ class UnorderedDictionary[ElementType = Any]:
     def get_by_binary_search(self, key: str) -> _GetterReturnType:
         """Get an element of the dictionary using the Binary Search algorithm.
 
-        The dictionary is expected to be sorted lexicographically before
-
         Args:
             key: The key associated with the value to get.
 
         Returns:
-            The value associated with the key, or `None` if the key is
-            not defined.
+            A tuple of the value associated with the key, and its index, for
+            internal/advanced purposes.
 
         Raises:
             KeyError: If the key does not exist.
         """
+        if not self._sorted:
+            self.sort()
+
         # Signifies the range that may contain the key we want.
         search_range: tuple[int, int] = (0, len(self.keys) - 1)
 
         while True:
-            checked_key_index: int = int(
-                (search_range[0] + search_range[1]) / 2
-            )
+            checked_key_index = int((search_range[0] + search_range[1]) / 2)
             checked_key: str = self.keys[checked_key_index]
 
             if checked_key < key:
@@ -138,8 +174,8 @@ class UnorderedDictionary[ElementType = Any]:
             key: The key associated with the value to get.
 
         Returns:
-            The value associated with the key, or `None` if the key is
-            not defined.
+            A tuple of the value associated with the key, and its index, for
+            internal/advanced purposes.
         """
         return self.get_by_binary_search(key)
 
