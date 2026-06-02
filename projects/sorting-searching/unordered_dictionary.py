@@ -8,7 +8,7 @@ Classes:
         this module.
 """
 
-from typing import Any
+from typing import Any, Callable
 
 
 class UnorderedDictionary[ElementType = Any]:
@@ -36,6 +36,7 @@ class UnorderedDictionary[ElementType = Any]:
 
         self.keys = keys
         self.values = values
+        self._len = len(keys)
 
     @staticmethod
     def from_dict(
@@ -57,9 +58,13 @@ class UnorderedDictionary[ElementType = Any]:
 
     # ---- Sort Implementations ----
 
+    # Default sort implementation
+    def sort(self) -> None:
+        """Sort the dictionary using an arbitrary algorithm."""
+
     # ---- Getter Implementations ----
 
-    type _GetterReturnType = tuple[ElementType, int] | None
+    type _GetterReturnType = tuple[ElementType, int]
 
     def get_by_linear_search(self, key: str) -> _GetterReturnType:
         """Get an element of the dictionary using a linear search algorithm.
@@ -72,6 +77,9 @@ class UnorderedDictionary[ElementType = Any]:
         Returns:
             The value associated with the key, or `None` if the key is
             not defined.
+
+        Raises:
+            KeyError: If the key does not exist.
         """
         found_index: int = -1
 
@@ -81,7 +89,7 @@ class UnorderedDictionary[ElementType = Any]:
                 break
 
         if found_index == -1:
-            return None
+            raise KeyError
 
         return self.values[found_index], found_index
 
@@ -96,6 +104,9 @@ class UnorderedDictionary[ElementType = Any]:
         Returns:
             The value associated with the key, or `None` if the key is
             not defined.
+
+        Raises:
+            KeyError: If the key does not exist.
         """
         # Signifies the range that may contain the key we want.
         search_range: tuple[int, int] = (0, len(self.keys) - 1)
@@ -117,6 +128,57 @@ class UnorderedDictionary[ElementType = Any]:
 
             # This always eventually is true when the key is undefined.
             if search_range[0] > search_range[1]:
-                return None
+                raise KeyError
+
+    # Default getter implementation
+    def get(self, key: str) -> _GetterReturnType:
+        """Get an element of the dictionary without specifying algorithm.
+
+        Args:
+            key: The key associated with the value to get.
+
+        Returns:
+            The value associated with the key, or `None` if the key is
+            not defined.
+        """
+        return self.get_by_binary_search(key)
+
+    # ---- Utility Methods ----
+
+    def to_dict(self) -> dict:
+        """Convert to a Python builtin `dict`.
+
+        Returns:
+            The converted Python `dict`.
+        """
+        output: dict[str, ElementType] = {}
+
+        for i in range(self._len):
+            output[self.keys[i]] = self.values[i]
+
+        return output
 
     # ---- Dunder Methods ----
+
+    def __len__(self) -> int:
+        """Get the number of entries in the dictionary.
+
+        Returns:
+            An integer representing the number of entries in the dictionary.
+        """
+        return self._len
+
+    def __delitem__(self, key: str) -> None:
+        """Delete an element of the dictionary."""
+        index: int = self.get(key)[1]
+
+        del self.keys[index]
+        del self.values[index]
+
+    def __repr__(self) -> str:
+        """Represent this object as a string.
+
+        Returns:
+            The string representation of the dictionary.
+        """
+        return str(self.to_dict())
