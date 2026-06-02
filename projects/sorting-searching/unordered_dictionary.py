@@ -1,4 +1,12 @@
-"""An implementation of an unordered dictionary."""
+"""An implementation of an unordered dictionary.
+
+Created to demonstrate various sorting and searching algorithms.
+
+Classes:
+    UnorderedDictionary:
+        An implementation of an unordered dictionary; the main focus of
+        this module.
+"""
 
 from typing import Any
 
