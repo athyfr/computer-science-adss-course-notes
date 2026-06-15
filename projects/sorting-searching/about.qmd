@@ -100,9 +100,9 @@ algorithm.
 
 ## Binary Search
 
-The *Binary Search* algorithm brings the time-complexity down to
-$O(\log_2(n))$. That's a huge improvement, and only saves more as the
-dictionary size increases.
+The *Binary Search* algorithm brings the time-complexity down to $O(\log_2 n)$.
+That's a huge improvement, and only saves more as the dictionary size
+increases.
 
 There's a downside however; the dictionary must be sorted by the keys.
 
