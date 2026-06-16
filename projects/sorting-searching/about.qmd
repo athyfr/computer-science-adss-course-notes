@@ -172,8 +172,9 @@ their Big-O analyses.
 ### Bubble Sort
 
 Bubble sort (or 'sinking sort') is likely the easiest sorting algorithm to
-understand and implement, but is quite inefficient. While learning sorting
-algorithms, it can be the best introductory option.
+understand and implement, but is quite inefficient (Big-O Time Complexity:
+$O(n^2)$). While learning sorting algorithms, it can be the best introductory
+option.
 
 Here's how it works:
 
@@ -261,11 +262,76 @@ This may have a little more of a performance impact on the first run (when it
 sorts the dictionary,) but on subsequent runs it will be faster than a linear
 search.
 
-In addition, we can use a more optimized sorting algorithm. I'll cover 2 of
-those below; the *insertion sort* algorithm, and the *quick-merge sort*
-algorithm.
+I'll cover 2 alternatives below; the *insertion sort* algorithm, and the
+*quick-merge sort* algorithm (most optimized).
 
 ### Insertion Sort
+
+The insertion sort algorithm can be conceptualized like so (using the analogy
+of cards):
+
+- You have 2 piles of cards: one sorted, and one not.
+- To start, the sorted pile is only the first element, while the rest of the
+  collection is considered unsorted.
+- We iterate over each unsorted element, and for each we find its place in the
+  sorted list (by iteration) and insert it there.
+
+This algorithm isn't more optimized by Big-O analysis (it's the same there;
+$O(n^2)$), but according to online sources, it *is* more optimized (Big-O
+ignores constants; insertion sort has a smaller time-complexity *coefficient*)
+
+Here it is integrated into the class:
+
+```python
+def sort_by_insertion(self) -> None:
+    """Sort the dictionary using the Insertion Sort algorithm.
+
+    Based on <https://www.geeksforgeeks.org/dsa/bubble-sort-algorithm/>
+    """
+    # `i` represents the index of the first element which is unsorted.
+    # Everything before `i` is sorted.
+    for i in range(1, self._len):
+        # Check its relation to each sorted element.
+        #
+        #  This can use any search algorithm, but here I'm using
+        # a linear search for simplicity.
+        #
+        # As a little bit of a hack, it will end up comparing
+        # against itself as a final case when it ends up at the
+        # end of the sorted portion.
+        for j in range(i + 1):
+            if self.keys[j] >= self.keys[i]:
+                # Move it to the sorted position.
+                if i != j:
+                    self.keys.insert(j, self.keys.pop(i))
+                    self.values.insert(j, self.values.pop(i))
+                break
+
+    self._sorted = True
+```
+
+I've set it as the default sort algorithm in the source file.
+
+A test using the same data as before:
+
+```{python}
+example_dictionary = UnorderedDictionary.from_dict(
+    {
+        "C": 4,
+        "D": 9,
+        "B": 2,
+        "A": 1,
+    }
+)
+
+example_dictionary.sort_by_insertion()
+
+print(example_dictionary)
+```
+
+Success!
+
+Now let's move onto the most optimized; *quick-merge sort.*
 
 ### Quick-Merge Sort
 

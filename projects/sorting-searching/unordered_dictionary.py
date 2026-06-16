@@ -92,12 +92,36 @@ class UnorderedDictionary[ElementType = Any]:
             if not swapped:
                 break
 
+    def sort_by_insertion(self) -> None:
+        """Sort the dictionary using the Insertion Sort algorithm.
+
+        Based on <https://www.geeksforgeeks.org/dsa/bubble-sort-algorithm/>
+        """
+        # `i` represents the index of the first element which is unsorted.
+        # Everything before `i` is sorted.
+        for i in range(1, self._len):
+            # Check its relation to each sorted element.
+            #
+            #  This can use any search algorithm, but here I'm using
+            # a linear search for simplicity.
+            #
+            # As a little bit of a hack, it will end up comparing
+            # against itself as a final case when it ends up at the
+            # end of the sorted portion.
+            for j in range(i + 1):
+                if self.keys[j] >= self.keys[i]:
+                    # Move it to the sorted position.
+                    if i != j:
+                        self.keys.insert(j, self.keys.pop(i))
+                        self.values.insert(j, self.values.pop(i))
+                    break
+
         self._sorted = True
 
     # Default sort implementation
     def sort(self) -> None:
         """Sort the dictionary using an arbitrary algorithm."""
-        self.sort_by_bubble()
+        self.sort_by_insertion()
 
     # ---- Getter Implementations ----
 
