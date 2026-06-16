@@ -335,4 +335,134 @@ Now let's move onto the most optimized; *quick-merge sort.*
 
 ### Quick-Merge Sort
 
+The *quick-merge sort* or *merge sort* recursively divides the list into
+halves, then puts those recursively sorts those halves, merging them back
+together.
+
+How it works:
+
+- *Divide:* Divide the list recursively into two halves until it can't be
+  divided anymore.
+- *Conquer:* Each subarray is sorted. Since each only consists of two single
+  elements (or already sorted subarrays), we only need to do 1 comparison for
+  each sort.
+- *Merge:* The sorted subarrays are spliced back together in sorted order.
+
+The [source I'm learning this from][gfg-ms] seems to use recursive function
+calls and auxiliary space ($O(n)$), but I've managed to do away with both of
+those, so mine should be significantly more optimized.
+
+Here's my implementation:
+
+![Diagram to aid understanding](plan-export.svg)
+
+```python
+def sort_by_quick_merge(self) -> None:
+    """Sort the dictionary using the Quick-Merge Sort algorithm.
+
+    Based on <https://www.geeksforgeeks.org/dsa/insertion-sort-algorithm/>
+    """
+    # NOTE: See [diagram](./plan.drawy) for visual explanation of algorithm
+    # No sorting needed if there's no or only 1 key.
+    if self._len <= 1:
+        return
+
+    # Represents the number of times the collection can be split.
+    max_depth = int(math.ceil(math.log2(self._len)))
+
+    # How many won't split as far as the others?
+    singles_start: int = 2 * self._len - 2**max_depth
+
+    # Pairs split further than the rest need to be sorted out.
+    for i in range(0, singles_start, 2):
+        # Sort each pair
+        if self.keys[i] > self.keys[i + 1]:
+            self._swap_elements(i, i + 1)
+
+    # Utility function used later in the method
+    def mix_size(as_singles: int, range_start: int) -> int:
+        """Convert a singles size to a mixed size of singles and pairs.
+
+        as_singles: The size, if pairs are counted as 1 instead of 2.
+
+        range_start: Where in the dictionary does this range start?
+
+        Returns:
+            The mixed size. Kept within range `as_singles`--`as_singles*2`.
+        """
+        # The lerp factor, scaled to as_singles.
+        lerp_factor: int = min(
+            int(max(singles_start - range_start, 0) * 0.5), as_singles
+        )
+        # Final return, based on a basic lerp algorithm.
+        return (as_singles - lerp_factor) + (2 * lerp_factor)
+
+    # Iterate over the depth levels
+    for depth in range(max_depth, 1, -1):
+        # The size of one group (from the previous depth level)
+        group_size: int = 2 ** (max_depth - depth)
+        # The end of the group-pair currently being processed.
+        # Initialized to 0 because it is used as an iterator.
+        groups_end: int = 0
+
+        # Loop over each group pair to be merged.
+        while groups_end < self._len:
+            # Start of the first group (inclusive).
+            # Also the end of the sorted region (exclusive),
+            # which starts empty.
+            groups_start = groups_end
+            # Start of the second group (inclusive).
+            # Also the end of the first group (exclusive).
+            groups_split = groups_start + mix_size(group_size, groups_start)
+            # End of the second group (exclusive).
+            groups_end = groups_split + mix_size(group_size, groups_split)
+
+            # Splice the groups together, using a sorted merge
+            # algorithm that only works if the inputs are sorted.
+            while groups_start < groups_split < groups_end:
+                # If the next element in the second group has a lower
+                # lexicographical ordering than the next in the first,
+                # it should be removed and appended to the sorted region.
+                if self.keys[groups_split] < self.keys[groups_start]:
+                    self._move_element(groups_split, groups_start)
+                    groups_split += 1
+
+                # If the above if statement didn't run, adding to the
+                # groups_start variable is essentially moving an element
+                # from the first group onto the sorted region.
+                groups_start += 1
+```
+
+Testing it:
+
+```{python}
+udict = UnorderedDictionary.from_dict(
+    {
+        "G": 7,
+        "A": 1,
+        "I": 9,
+        "E": 5,
+        "H": 8,
+        "C": 3,
+        "K": 11,
+        "B": 2,
+        "D": 4,
+        "F": 6,
+        "J": 10,
+        "L": 12,
+    }
+)
+
+udict.sort_by_quick_merge()
+
+print(udict)
+```
+
+Works like a charm!
+
 ## Data-Structure Traversal
+
+We're all done with the sorting algorithms, but I have one last thing to check
+out: *data-structure traversal.*
+
+[gfg-ms]: https://www.geeksforgeeks.org/dsa/merge-sort/

@@ -8,7 +8,10 @@ Classes:
         this module.
 """
 
+import math
 from typing import Any
+
+# TODO: Debug with `code` module; see <https://www.digitalocean.com/community/tutorials/how-to-debug-python-with-an-interactive-console>
 
 
 class UnorderedDictionary[ElementType = Any]:
@@ -124,10 +127,87 @@ class UnorderedDictionary[ElementType = Any]:
 
         self._sorted = True
 
+    def sort_by_quick_merge(self) -> None:
+        """Sort the dictionary using the Quick-Merge Sort algorithm.
+
+        Based on <https://www.geeksforgeeks.org/dsa/insertion-sort-algorithm/>
+        """
+        # NOTE: See [diagram](./plan.drawy) for visual explanation of algorithm
+        # No sorting needed if there's no or only 1 key.
+        if self._len <= 1:
+            return
+
+        # Represents the number of times the collection can be split.
+        max_depth = int(math.ceil(math.log2(self._len)))
+
+        # How many won't split as far as the others?
+        singles_start: int = 2 * self._len - 2**max_depth
+
+        # Pairs split further than the rest need to be sorted out.
+        for i in range(0, singles_start, 2):
+            # Sort each pair
+            if self.keys[i] > self.keys[i + 1]:
+                self._swap_elements(i, i + 1)
+
+        # Utility function used later in the method
+        def mix_size(as_singles: int, range_start: int) -> int:
+            """Convert a singles size to a mixed size of singles and pairs.
+
+            as_singles: The size, if pairs are counted as 1 instead of 2.
+
+            range_start: Where in the dictionary does this range start?
+
+            Returns:
+                The mixed size. Kept within range `as_singles`--`as_singles*2`.
+            """
+            # The lerp factor, scaled to as_singles.
+            lerp_factor: int = min(
+                int(max(singles_start - range_start, 0) * 0.5), as_singles
+            )
+            # Final return, based on a basic lerp algorithm.
+            return (as_singles - lerp_factor) + (2 * lerp_factor)
+
+        # Iterate over the depth levels
+        for depth in range(max_depth, 1, -1):
+            # The size of one group (from the previous depth level)
+            group_size: int = 2 ** (max_depth - depth)
+            # The end of the group-pair currently being processed.
+            # Initialized to 0 because it is used as an iterator.
+            groups_end: int = 0
+
+            # Loop over each group pair to be merged.
+            while groups_end < self._len:
+                # Start of the first group (inclusive).
+                # Also the end of the sorted region (exclusive),
+                # which starts empty.
+                groups_start = groups_end
+                # Start of the second group (inclusive).
+                # Also the end of the first group (exclusive).
+                groups_split = groups_start + mix_size(
+                    group_size, groups_start
+                )
+                # End of the second group (exclusive).
+                groups_end = groups_split + mix_size(group_size, groups_split)
+
+                # Splice the groups together, using a sorted merge
+                # algorithm that only works if the inputs are sorted.
+                while groups_start < groups_split < groups_end:
+                    # If the next element in the second group has a lower
+                    # lexicographical ordering than the next in the first,
+                    # it should be removed and appended to the sorted region.
+                    if self.keys[groups_split] < self.keys[groups_start]:
+                        self._move_element(groups_split, groups_start)
+                        groups_split += 1
+
+                    # If the above if statement didn't run, adding to the
+                    # groups_start variable is essentially moving an element
+                    # from the first group onto the sorted region.
+                    groups_start += 1
+
     # Default sort implementation
     def sort(self) -> None:
         """Sort the dictionary using an arbitrary algorithm."""
-        self.sort_by_insertion()
+        self.sort_by_quick_merge()
 
     # ---- Getter Implementations ----
 
