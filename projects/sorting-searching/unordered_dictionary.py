@@ -59,6 +59,22 @@ class UnorderedDictionary[ElementType = Any]:
 
     # ---- Sort Implementations ----
 
+    # Elementary Sort Operations
+
+    def _move_element(self, i_from: int, i_to: int) -> tuple[int, int]:
+        self.keys.insert(i_to, self.keys.pop(i_from))
+        self.values.insert(i_to, self.values.pop(i_from))
+
+        return i_from, i_to
+
+    def _swap_elements(self, i1: int, i2: int) -> tuple[int, int]:
+        self.keys[i1], self.keys[i2] = self.keys[i2], self.keys[i1]
+        self.values[i1], self.values[i2] = self.values[i2], self.values[i1]
+
+        return i1, i2
+
+    # Sort Algorithms
+
     def sort_by_bubble(self) -> None:
         """Sort the dictionary using the Bubble Sort algorithm.
 
@@ -73,17 +89,8 @@ class UnorderedDictionary[ElementType = Any]:
             # are already in place.
             for j in range(self._len - i - 1):
                 if self.keys[j] > self.keys[j + 1]:
-                    # Swap the key with its successor.
-                    self.keys[j], self.keys[j + 1] = (
-                        self.keys[j + 1],
-                        self.keys[j],
-                    )
-                    # Swap the value with its successor, to bring them into
-                    # order relative to each other.
-                    self.values[j], self.values[j + 1] = (
-                        self.values[j + 1],
-                        self.values[j],
-                    )
+                    # Swap the entry with its successor.
+                    self._swap_elements(j, j + 1)
                     # Track that this operation happened (see below).
                     swapped = True
 
@@ -112,8 +119,7 @@ class UnorderedDictionary[ElementType = Any]:
                 if self.keys[j] >= self.keys[i]:
                     # Move it to the sorted position.
                     if i != j:
-                        self.keys.insert(j, self.keys.pop(i))
-                        self.values.insert(j, self.values.pop(i))
+                        self._move_element(i, j)
                     break
 
         self._sorted = True
