@@ -241,7 +241,7 @@ sort it!:
 ```{python}
 from unordered_dictionary import UnorderedDictionary
 
-example_dictionary = UnorderedDictionary.from_dict(
+udict = UnorderedDictionary.from_dict(
     {
         "C": 4,
         "D": 9,
@@ -250,10 +250,10 @@ example_dictionary = UnorderedDictionary.from_dict(
     }
 )
 
-example_dictionary.sort_by_bubble()
+udict.sort_by_bubble()
 
-print(f"A: {example_dictionary.get_by_binary_search('A')[0]}")
-print(f"C: {example_dictionary.get_by_binary_search('C')[0]}")
+print(f"A: {udict.get_by_binary_search('A')[0]}")
+print(f"C: {udict.get_by_binary_search('C')[0]}")
 ```
 
 As we can see, everything is functioning as expected; A is 1, and C is 4.
@@ -315,7 +315,7 @@ I've set it as the default sort algorithm in the source file.
 A test using the same data as before:
 
 ```{python}
-example_dictionary = UnorderedDictionary.from_dict(
+udict = UnorderedDictionary.from_dict(
     {
         "C": 4,
         "D": 9,
@@ -324,9 +324,9 @@ example_dictionary = UnorderedDictionary.from_dict(
     }
 )
 
-example_dictionary.sort_by_insertion()
+udict.sort_by_insertion()
 
-print(example_dictionary)
+print(udict)
 ```
 
 Success!
