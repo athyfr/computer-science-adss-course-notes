@@ -11,8 +11,6 @@ Classes:
 import math
 from typing import Any
 
-# TODO: Debug with `code` module; see <https://www.digitalocean.com/community/tutorials/how-to-debug-python-with-an-interactive-console>
-
 
 class UnorderedDictionary[ElementType = Any]:
     """An implementation of an unordered dictionary.
